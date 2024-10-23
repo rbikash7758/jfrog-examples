@@ -7,6 +7,11 @@ packer {
   }
 }
 
+variable "docker_image_version" {
+  type    = string
+  default = "v1.0.0"
+}
+
 source "docker" "my_docker_image" {
   image  = "ubuntu:20.04"
   commit = true
@@ -30,6 +35,6 @@ build {
 
   post-processor "docker-tag" {
     repository = "bikashjfrog.jfrog.io/s3cloudhub-example-d-docker-local/docker-example"
-    tags       = ["latest", "v1.0.0"]
+    tags       = ["latest", "${var.docker_image_version}"]
   }
 }
