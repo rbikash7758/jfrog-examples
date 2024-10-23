@@ -32,11 +32,13 @@ jobs:
 
     - name: Log in to JFrog Artifactory Docker Registry
       run: |
-        echo ${{ secrets.JFROG_PASSWORD }} | docker login ${{ secrets.JFROG_URL}} --username ${{ secrets.JFROG_USERNAME }} --password-stdin
+        echo ${{ secrets.JFROG_PASSWORD }} | docker login ${{ secrets.JFROG_URL }} --username ${{ secrets.JFROG_USERNAME }} --password-stdin
 
     - name: Build and Push Docker Image
       run: |
+        docker tag packer-dkr-example:latest ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
+        docker tag packer-dkr-example:latest ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
 
     - name: logout from JFrog Artifactory
