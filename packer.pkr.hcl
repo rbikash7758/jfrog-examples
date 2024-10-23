@@ -29,7 +29,7 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "https://bikashjfrog.jfrog.io/s3cloudhub-example-d-docker-local/docker-example"
+    repository = "bikashjfrog.jfrog.io/s3cloudhub-example-d-docker-local/docker-example"
     tag        = ["latest", "v1.0.0"]
   }
 }
