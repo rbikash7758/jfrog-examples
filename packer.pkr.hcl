@@ -8,9 +8,9 @@ packer {
 }
 
 source "docker" "my_docker_image" {
-  image  = "ubuntu:20.04"
+  image = "ubuntu:20.04"
+  name = "packer-dkr-example"
   commit = true
-  tag    = "packer-dkr-example"
 }
 
 build {
