@@ -40,7 +40,7 @@ jobs:
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
         docker tag packer-dkr-example:latest ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
-
+    
     - name: logout from JFrog Artifactory
       run: |
         docker logout ${{ secrets.JFROG_URL }}
