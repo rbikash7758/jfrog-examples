@@ -1,4 +1,4 @@
-name: Build Docker Image with Packer and Push to JFrog Artifactory cloud
+name: Build Docker Image with Packer and Push to JFrog Artifactory
 
 on:
   push:
@@ -13,21 +13,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Docker Buid
+    - name: Set up Docker Build
       uses: docker/setup-buildx-action@v2
 
-    - name: Setup the packer
+    - name: Setup Packer
       uses: hashicorp/setup-packer@v3
       with:
         version: 'latest'
 
-    - name: Initialize the packer
+    - name: Initialize Packer
       run: packer init .
 
-    - name: validate packer configuration
+    - name: Validate Packer Configuration
       run: packer validate packer.pkr.hcl
 
-    - name: Build Docker image with packer
+    - name: Build Docker Image with Packer
       run: packer build packer.pkr.hcl
 
     - name: Log in to JFrog Artifactory Docker Registry
@@ -36,11 +36,11 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker tag packer-dkr-example:latest ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
+        docker tag ubuntu:20.04 ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
-        docker tag packer-dkr-example:latest ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
+        docker tag ubuntu:20.04 ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
         docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
 
-    - name: logout from JFrog Artifactory
+    - name: Logout from JFrog Artifactory
       run: |
         docker logout ${{ secrets.JFROG_URL }}
