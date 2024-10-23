@@ -10,6 +10,7 @@ packer {
 source "docker" "my_docker_image" {
   image  = "ubuntu:20.04"
   commit = true
+  tag    = "packer-dkr-example"
 }
 
 build {
@@ -30,6 +31,6 @@ build {
 
   post-processor "docker-tag" {
     repository = "bikashjfrog.jfrog.io/s3cloudhub-example-d-docker-local/docker-example"
-    tag        = ["latest", "v1.0.0"]
+    tags       = ["latest", "v1.0.0"]
   }
 }
