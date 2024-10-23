@@ -1,4 +1,4 @@
-name: Build Docker Image with Packer and Push to AWS ECR
+name: Build Docker Image with Packer and Push to JFrog Artifactory
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
         packer-version: 'latest'
 
     - name: Initialize the packer
-      run: init .
+      run: packer init .
 
     - name: validate packer configuration
       run: packer validate packer.pkr.hcl
@@ -30,16 +30,15 @@ jobs:
     - name: Build Docker image with packer
       run: packer build packer.pkr.hcl
 
-    - name: Log in to Jfrog Atifactory Docker Regisry
+    - name: Log in to JFrog Artifactory Docker Registry
       run: |
         echo ${{ secrets.JFROG_PASSWORD }} | docker login ${{ secrets.JFROG_URL}} --username ${{ secrets.JFROG_USERNAME }} --password-stdin
 
     - name: Build and Push Docker Image
       run: |
-        docker-push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
-        docker-push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
+        docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:latest
+        docker push ${{ secrets.JFROG_URL }}/s3cloudhub-example-d-docker/docker-example:v1.0.0
 
-    - name: logout from Jfrog Artifactory
+    - name: logout from JFrog Artifactory
       run: |
         docker logout ${{ secrets.JFROG_URL }}
-  
