@@ -1,4 +1,4 @@
-name: Build Docker Image with Packer and Push to JFrog Artifactory
+name: Build Docker Image with Packer and Push to JFrog Artifactory cloud
 
 on:
   push:
